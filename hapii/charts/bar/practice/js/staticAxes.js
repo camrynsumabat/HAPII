@@ -14,7 +14,7 @@ var xScale = d3.scaleBand()
 var g = svg.append("g")
            .attr("transform", "translate(" + 100 + "," + 100 + ")");
 
-d3.csv("alphabet.csv", function(error, data) {
+d3.csv("../data/alphabet.csv", function(error, data) {
     if (error) {
         throw error;
     }

@@ -1,6 +1,6 @@
 // dynamic y axis bar graph
 
-var fileName = "alphabet.csv";
+var fileName = "../data/alphabet.csv";
 
 d3.csv(fileName, function(error, data) {
     if (error) { throw error; }
