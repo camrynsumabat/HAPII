@@ -18,7 +18,8 @@ CS 4610 - Dr. Ben Steichen <br>
 https://d3js.org/
 
 ### Bar Chart
-https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js
+[Create Bar Chart using D3](https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js) <br>
+[Updating Bar Chart with Dropdown Menu](http://bl.ocks.org/williaster/10ef968ccfdc71c30ef8) <br>
 
 ### Line Chart
 https://towardsdatascience.com/an-introduction-to-making-dynamic-and-interactive-plots-with-d3-a9e859413c5a
