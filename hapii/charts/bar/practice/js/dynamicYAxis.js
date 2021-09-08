@@ -64,26 +64,23 @@ var makeVis = function(data) {
                 return d.frequency;
         })]);
 
-        yAxisHandleForUpdate.call(yAxis.tickFormat(function(d) {
-            return (d*inc) + "%";
+        yAxisHandleForUpdate.transition().duration(1000).call(yAxis.tickFormat(function(d) {
+            return Math.round(d*inc) + "%";
         }).ticks(10));
 
-        var bars = canvas.selectAll(".bar").data(data);
+        var bars = canvas.selectAll("rect").data(data);
 
         // add bars for new data
         bars.enter().append("rect")
+            .merge(bars)
+            .transition()
+            .duration(1000)
             .attr("class", "bar")
             .attr("fill", "green")
             .attr("x", function(d) { return xScale(d.letter); })
             .attr("width", xScale.bandwidth())
-            .attr("y", function(d) { return yScale(d.frequency); })
-            .attr("height", function(d) {return height - yScale(d.frequency); });
-
-        // update old bars
-        bars.transition()
-            .duration(250)
-            .attr("y", function(d) { return yScale(d.frequency); })
-            .attr("height", function(d) { return height - yScale(d.frequency); });
+            .attr("y", function(d) { return yScale(d.frequency/(inc/100)); })
+            .attr("height", function(d) {return height - yScale(d.frequency/(inc/100)); });
 
         // remove old bars
         bars.exit().remove();
