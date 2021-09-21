@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .arc text {
+            font: 24px sans-serif;
+            text-anchor: middle;
+        }
+
+        .arc path {
+            stroke: #fff;
+        }
+
+    </style>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <title>Misleading Pie Chart</title>
+</head>
+<body>
+    <br>
+    <h1>% of respondents with a favorable opinion of each brand</h1>
+    <br>
+    <svg width="500" height="400"></svg>
+
+    <a href="https://www.tutorialsteacher.com/d3js/create-pie-chart-using-d3js">Creating a pie chart with D3JS</a>
+    <script>
+
+        // define variables
+        var svg = d3.select("svg"),
+            width = svg.attr("width"),
+            height = svg.attr("height"),
+            radius = Math.min(width, height) / 2;
+
+        var g = svg.append("g")
+                   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        var color = d3.scaleOrdinal(['#4daf4a','#377eb8','#ff7f00','#984ea3','#e41a1c']);
+
+        // generate the pie, setting percentages as pie value
+        var pie = d3.pie().value(function(d) {
+                return d.percentage;
+            });
+
+        // define arc for each pie wedge
+        var arc = d3.arc()
+                     .outerRadius(radius)
+                     .innerRadius(0);
+
+        // define where to add the labels in the wedge
+        var label = d3.arc()
+                      .outerRadius(radius)
+                      .innerRadius(radius - 150);
+
+        // load data
+        d3.csv("../data/brand.csv", function(error, data) {
+            if (error) {
+                throw error;
+            }
+            var arcs = g.selectAll(".arc")
+                       .data(pie(data))
+                       .enter().append("g")
+                       .attr("class", "arc");
+
+            // create group elements for each of the data values in the dataset
+            arcs.append("path")
+               .attr("d", arc)
+               .attr("fill", function(d) { return color(d.data.brand); });
+
+            // add generated arcs to create paths for each pie wedge
+            arcs.append("text")
+               .attr("transform", function(d) {
+                        return "translate(" + label.centroid(d) + ")";
+                })
+               .text(function(d) { return d.data.brand + " " + d.data.percentage + "%"; });
+            });
+
+    </script>
+</body>
+</html>
